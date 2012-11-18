@@ -1,0 +1,7 @@
+Django==1.4.2
+PocketSphinx==0.7
+SphinxBase==0.7
+django-debug-toolbar==0.9.4
+django-extensions==1.0.1
+pyserial==2.6
+wsgiref==0.1.2
