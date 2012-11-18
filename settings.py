@@ -1,3 +1,4 @@
+import os
 # Django settings for accelera project.
 
 DEBUG = True
@@ -14,10 +15,13 @@ TIME_ZONE = 'Europe/Vienna'
 
 LANGUAGE_CODE = 'en-us'
 
+INTERNAL_IPS = ('127.0.0.1',)
+
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = ''
@@ -31,7 +35,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(PROJECT_PATH, "static")
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -73,6 +77,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'accelera.urls'
@@ -92,6 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'debug_toolbar'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

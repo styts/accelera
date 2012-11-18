@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Accelera</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <title>Accelera</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <script language="javascript" type="text/javascript"
+    src="{{ STATIC_URL }}jquery.min.js"></script>
+    <script language="javascript" type="text/javascript"
+    src="{{ STATIC_URL }}flot/jquery.flot.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $.plot($("#graph"), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
+    });
+    </script>
+</head>
+<body>
 
-        <p>Hello world!</p>
+    <p>Graph</p>
+    <div id="graph" style="width:600px;height:300px"></div>
 
-    </body>
+</body>
 </html>
