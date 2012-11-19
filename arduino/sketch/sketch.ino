@@ -18,5 +18,5 @@ void loop()
   Serial.print(analogRead(zpin));
   Serial.print("\n");
   // delay before next reading:
-  delay(100);
+  delay(10);
 }

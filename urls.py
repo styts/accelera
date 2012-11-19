@@ -8,6 +8,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'accelera.views.home', name='home'),
+    url(r'^data/$', 'accelera.views.data', name='data'),
     # url(r'^accelera/', include('accelera.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

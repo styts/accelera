@@ -1,5 +1,7 @@
 from django.db import models
 import datetime
+import time
+import random
 
 
 class Reading(models.Model):
@@ -13,5 +15,10 @@ class Reading(models.Model):
         super(Reading, self).save(*args, **kwargs)
 
         # clean older entries
-        Reading.objects.filter(timeStamp__lt=datetime.datetime.now()
-            - datetime.timedelta(minutes=1)).delete()
+        if random.random() <= 0.01:
+            Reading.objects.filter(timeStamp__lt=datetime.datetime.now()
+                - datetime.timedelta(minutes=10)).delete()
+
+    def ts(self):
+        ms = time.mktime(self.timeStamp.timetuple()) + self.timeStamp.microsecond / 1000000.0
+        return ms
