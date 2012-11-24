@@ -11,7 +11,7 @@ def home(request):
 
 def data(request):
     ts = request.GET['ts'] if "ts" in request.GET else ""
-    if ts == "":
+    if ts == "" or ts == "undefined":
         ts = datetime.datetime.now() - datetime.timedelta(seconds=2)
     else:
         ts = datetime.datetime.fromtimestamp(float(ts))

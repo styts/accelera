@@ -4,11 +4,11 @@ const int zpin = A2;                  // z-axis (only on 3-axis models)
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(57600);
 }
 
-void loop()
-{
+
+void old(){
   Serial.print(analogRead(xpin));
   // print a tab between values:
   Serial.print("\t");
@@ -18,5 +18,65 @@ void loop()
   Serial.print(analogRead(zpin));
   Serial.print("\n");
   // delay before next reading:
-  delay(10);
+  delay(1);
+}
+
+int analog_x,analog_y,analog_z;
+float vol_x,vol_y,vol_z;
+float add_x,add_y,add_z;
+float g_x,g_y,g_z;
+float degree_x,degree_y,degree_z;
+
+void wiki(){
+ analog_x=analogRead(0);
+ analog_y=analogRead(1);
+ analog_z=analogRead(2);
+  vol_x=analog_x*5.0/1024;//convert analog_x-->voltage value(v)
+  vol_y=analog_y*5.0/1024;
+  vol_z=analog_z*5.0/1024;
+ //range x: 0.83 - 2.41    1.62
+ //      y: 0.96 - 2.53    1.74
+ //      z: 0.72 - 2.23    1.48
+  add_x=vol_x-1.62;//calculate the added x axis voltage value
+  add_y=vol_y-1.74;
+  add_z=vol_z-1.48;
+  g_x=add_x/0.8;//calculate the gram value
+  g_y=add_y/0.8;
+  g_z=add_z/0.8;
+
+  if(g_x<=1&&g_x>=-1) //We use this condition to prevent the overflow of asin(x).( If x>1 or x<-1, asin(x)=0)
+  {
+  degree_x=asin(g_x)*180.0/PI;//calculate the degree value
+  degree_y=asin(g_y)*180.0/PI;
+  degree_z=asin(g_z)*180.0/PI;
+}
+  //fix the overflow condition
+  if(g_x>1)
+  degree_x=90;
+  if(g_x<-1)
+  degree_x=-90;
+  if(g_y>1)
+  degree_y=90;
+  if(g_y<-1)
+  degree_y=-90;
+  if(g_z>1)
+  degree_z=90;
+  if(g_z<-1)
+  degree_z=-90;
+ //#########################
+ //print
+ Serial.print(degree_x);
+ Serial.print("\t");
+ Serial.print(degree_y);
+ Serial.print("\t");
+ Serial.println(degree_z);
+ Serial.print("\n");
+ delay(3);
+
+}
+
+void loop()
+{
+  wiki();
+
 }

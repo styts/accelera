@@ -5,9 +5,9 @@ import random
 
 
 class Reading(models.Model):
-    x = models.IntegerField()
-    y = models.IntegerField()
-    z = models.IntegerField()
+    x = models.FloatField()
+    y = models.FloatField()
+    z = models.FloatField()
 
     timeStamp = models.DateTimeField(auto_now_add=True)
 

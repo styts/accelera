@@ -8,7 +8,7 @@ dev = '/dev/tty.usbmodemfa131'
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        ser = serial.Serial(dev, 57600, timeout=2)
+        ser = serial.Serial(dev, 9600, timeout=2)
         ser.setRTS(True)
         ser.setRTS(False)
         while True:
@@ -21,5 +21,4 @@ class Command(BaseCommand):
                 r.save()
             except Exception, e:
                 print e
-                print line
         ser.close
