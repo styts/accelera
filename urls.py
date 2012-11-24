@@ -4,11 +4,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
+from views import *
 
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'accelera.views.home', name='home'),
     url(r'^data/$', 'accelera.views.data', name='data'),
+    url(r'^sse/$', MySseEvents.as_view(), name='sse'),
     # url(r'^accelera/', include('accelera.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
