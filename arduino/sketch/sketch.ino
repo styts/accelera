@@ -1,10 +1,14 @@
+#include<stdlib.h>
+
 const int xpin = A0;                  // x-axis of the accelerometer
 const int ypin = A1;                  // y-axis
 const int zpin = A2;                  // z-axis (only on 3-axis models)
+String line = "";
+char buff[20];
 
 void setup()
 {
-  Serial.begin(57600);
+  Serial.begin(9600);
 }
 
 
@@ -49,7 +53,7 @@ void wiki(){
   degree_x=asin(g_x)*180.0/PI;//calculate the degree value
   degree_y=asin(g_y)*180.0/PI;
   degree_z=asin(g_z)*180.0/PI;
-}
+  }
   //fix the overflow condition
   if(g_x>1)
   degree_x=90;
@@ -65,14 +69,16 @@ void wiki(){
   degree_z=-90;
  //#########################
  //print
- Serial.print(degree_x);
- Serial.print("\t");
- Serial.print(degree_y);
- Serial.print("\t");
- Serial.println(degree_z);
- Serial.print("\n");
- delay(3);
-
+ line = "";
+// line = line + String.valueOf(degree_x);
+ line = line + dtostrf(degree_x, 2, 2, buff);
+ line = line + "\t";
+ 
+ line = line + dtostrf(degree_y, 2, 2, buff);
+ line = line + "\t";
+ line = line + dtostrf(degree_z, 2, 2, buff);
+ Serial.println(line);
+ delay(10);
 }
 
 void loop()

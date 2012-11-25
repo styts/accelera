@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 import simplejson
 from main.models import Reading
-import datetime
 from django_sse.views import BaseSseView
-from django.utils.timezone import now
 import time
+import serial
+
+dev = '/dev/tty.usbmodemfa131'
 
 
 def home(request):
@@ -24,29 +24,30 @@ def get_result(last_ts):
     return result
 
 
-def data(request):
-    ts = request.GET['ts'] if "ts" in request.GET else ""
-    if ts == "" or ts == "undefined":
-        ts = datetime.datetime.now() - datetime.timedelta(seconds=2)
-    else:
-        ts = datetime.datetime.fromtimestamp(float(ts))
-
-    result = get_result(ts)
-
-    data = simplejson.dumps(result)
-    return HttpResponse(data, mimetype='application/json')
-
-# class MySseEvents(BaseSseView):
-#     pass
-
-
 class MySseEvents(BaseSseView):
-    last_ts = now()
-
     def iterator(self):
+        ser = serial.Serial(dev, 9600, timeout=2)
+        ser.setRTS(True)
+        ser.setRTS(False)
+        line = ""
         while True:
-            result = get_result(MySseEvents.last_ts)
-            self.sse.add_message("result", simplejson.dumps(result))
-            MySseEvents.last_ts = now()
-            time.sleep(1)
-            yield
+            try:
+                line = ser.readline().strip('\r\n')
+                if line == "" or line == ['\n'] or line == "\n":
+                    continue
+                line = line.split('\t')
+                x, y, z = tuple(line)
+                result = {
+                    "x": x,
+                    "y": y,
+                    "z": z.strip(),
+                    "ts": time.time(),
+                }
+                s = simplejson.dumps(result)
+                time.sleep(0.003)
+                self.sse.add_message("result", s)
+                yield
+            except ValueError:
+                print line
+            finally:
+                ser.close
