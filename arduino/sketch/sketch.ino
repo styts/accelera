@@ -73,12 +73,12 @@ void wiki(){
 // line = line + String.valueOf(degree_x);
  line = line + dtostrf(degree_x, 2, 2, buff);
  line = line + "\t";
- 
+
  line = line + dtostrf(degree_y, 2, 2, buff);
  line = line + "\t";
  line = line + dtostrf(degree_z, 2, 2, buff);
  Serial.println(line);
- delay(10);
+ delay(1);
 }
 
 void loop()

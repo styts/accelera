@@ -13,8 +13,17 @@
     src="{{ STATIC_URL }}flot/jquery.flot.time.js"></script>
     <script language="javascript" type="text/javascript"
     src="{{ STATIC_URL }}main.js"></script>
+    <style type="text/css">
+    .value{
+        font-size: 30px;
+        position: absolute;
+    }
+    </style>
 </head>
 <body>
-    <div id="graph" style="width:600px;height:300px"></div>
+    <div id="graph" style="width:800px;height:300px;"></div>
+    <span class="value" id="val_x">0.0000</span>
+    <span class="value" style="left:180px;" id="val_y">0.0000</span>
+    <span class="value" style="left:360px;" id="val_z">0.0000</span>
 </body>
 </html>

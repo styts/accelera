@@ -5,7 +5,9 @@ from django_sse.views import BaseSseView
 import time
 import serial
 
-dev = '/dev/tty.usbmodemfa131'
+# dev = '/dev/tty.usbmodemfa131'
+dev = '/dev/tty.usbmodemfd121'
+BITRATE = 9600
 
 
 def home(request):
@@ -26,7 +28,7 @@ def get_result(last_ts):
 
 class MySseEvents(BaseSseView):
     def iterator(self):
-        ser = serial.Serial(dev, 9600, timeout=2)
+        ser = serial.Serial(dev, BITRATE, timeout=2)
         ser.setRTS(True)
         ser.setRTS(False)
         line = ""
